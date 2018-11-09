@@ -1,25 +1,47 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import WeatherDisplay from './WeatherDisplay'
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      cities : [
+        { name: "Palo Alto", zip: "94303" },
+        { name: "San Jose", zip: "94088" },
+        { name: "Santa Cruz", zip: "95062" },
+        { name: "Honolulu", zip: "96803" }
+      ],
+      activeCityIndex: 0,
+    };
+    this.createCitiesArray = this.createCitiesArray.bind(this);
+  }
+
+  createCitiesArray(city, index) {
+    return (
+      <button className={ (this.state.activeCityIndex === index) ? 'city-btn active' : 'city-btn' }
+      onClick={ () => this.setState({ activeCityIndex: index }) }
+      key={index}>
+        {city.name}
+    </button>
+    )
+  };
+  
   render() {
+    
+    const { cities, activeCityIndex } = this.state;
+    let citiesArray = cities.map(this.createCitiesArray);
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div className="cities-container">
+          <h1 className="cities-container__title">Choose a city</h1>
+          { citiesArray }
+        </div>
+        <WeatherDisplay city={cities[activeCityIndex].name}
+                        zip={cities[activeCityIndex].zip}
+        />
       </div>
     );
   }
