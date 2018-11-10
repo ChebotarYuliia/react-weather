@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import WeatherDisplay from './WeatherDisplay'
+import WeatherCities from './components/WeatherCities';
+import WeatherDisplay from './components/WeatherDisplay';
 
 class App extends Component {
   constructor() {
@@ -8,40 +9,34 @@ class App extends Component {
 
     this.state = {
       cities : [
-        { name: "Palo Alto", zip: "94303" },
-        { name: "San Jose", zip: "94088" },
-        { name: "Santa Cruz", zip: "95062" },
-        { name: "Honolulu", zip: "96803" }
+        { name: "Kharkiv" },
+        { name: "Kiev" },
+        { name: "Odessa" },
+        { name: "Lviv" }
       ],
       activeCityIndex: 0,
     };
-    this.createCitiesArray = this.createCitiesArray.bind(this);
+    this.setActiveCityIndex = this.setActiveCityIndex.bind(this);
   }
 
-  createCitiesArray(city, index) {
-    return (
-      <button className={ (this.state.activeCityIndex === index) ? 'city-btn active' : 'city-btn' }
-      onClick={ () => this.setState({ activeCityIndex: index }) }
-      key={index}>
-        {city.name}
-    </button>
-    )
-  };
+  setActiveCityIndex = (newIndex) => {
+    const index = newIndex;
+    this.setState({ activeCityIndex: index })
+  }
   
   render() {
     
     const { cities, activeCityIndex } = this.state;
-    let citiesArray = cities.map(this.createCitiesArray);
 
     return (
       <div className="App">
         <div className="cities-container">
           <h1 className="cities-container__title">Choose a city</h1>
-          { citiesArray }
+          <WeatherCities 
+            cities={this.state.cities}
+            chosenCity={ this.setActiveCityIndex } />
         </div>
-        <WeatherDisplay city={cities[activeCityIndex].name}
-                        zip={cities[activeCityIndex].zip}
-        />
+        <WeatherDisplay city={cities[activeCityIndex].name}/>
       </div>
     );
   }
