@@ -14,19 +14,19 @@ class App extends Component {
         { name: "Odessa" },
         { name: "Lviv" }
       ],
-      activeCityIndex: 0,
+      activeCity: { name: "Kharkiv" },
     };
     this.setActiveCityIndex = this.setActiveCityIndex.bind(this);
   }
 
   setActiveCityIndex = (newIndex) => {
     const index = newIndex;
-    this.setState({ activeCityIndex: index })
+    this.setState({ activeCity: this.state.cities[index] });
   }
   
   render() {
     
-    const { cities, activeCityIndex } = this.state;
+    const { cities, activeCity } = this.state;
 
     return (
       <div className="App">
@@ -36,7 +36,7 @@ class App extends Component {
             cities={this.state.cities}
             chosenCity={ this.setActiveCityIndex } />
         </div>
-        <WeatherDisplay city={cities[activeCityIndex].name}/>
+        <WeatherDisplay city={activeCity.name}/>
       </div>
     );
   }

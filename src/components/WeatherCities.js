@@ -16,16 +16,18 @@ class WeatherCities extends Component{
         return (
             <button
                 className={ (this.state.activeCityIndex === index) ? 'city-btn active' : 'city-btn' }
-                onClick={ () => {this.setState({ activeCityIndex: index });
-                                this.setChosenCityIndex()} }
+                onClick={ () => this.setChosenCityIndex(index)}
                 key={index}>
             {city.name}
           </button>
         )
       };
 
-      setChosenCityIndex = () => {
-        this.props.chosenCity( this.state.activeCityIndex );
+      setChosenCityIndex = (index) => {
+        this.setState({
+            activeCityIndex: index,
+        });
+        this.props.chosenCity(index);
       }
 
       render() {
