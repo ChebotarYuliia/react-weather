@@ -7,6 +7,8 @@ class SearchCity extends Component {
         this.state = {
             enteredCity : null,
         }
+
+        this.handleChangeInput = this.handleChangeInput.bind(this)
     }
 
     componentDidMount(){
@@ -24,15 +26,19 @@ class SearchCity extends Component {
         this.autocompleteService = new window.google.maps.places.Autocomplete(searchInput);
     }
 
+    handleChangeInput = (e) => {
+        this.setState({ enteredCity: e.target.value });
+    };
+
     render() {
         return(
-            <div className="search-container">
+            <form className="search-form">
                 <input id="searchInput"
                    placeholder="Enter a city"
-                   onChange={ (e) => this.setState({ enteredCity : e.target.value})}
-                   ref={ (node) => { this._searchInput = node; }}/>
+                   onChange={ this.handleChangeInput }
+                   ref={ (node) => { this._searchInput = node }}/>
                 <button className="searchBtn">ADD</button>
-            </div>
+            </form>
         )
     };
 };
