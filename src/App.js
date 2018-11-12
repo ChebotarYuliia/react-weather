@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import SearchCity from './components/SearchCity'
 import WeatherCities from './components/WeatherCities';
 import WeatherDisplay from './components/WeatherDisplay';
+import Autocomplete from 'react-google-autocomplete';
 
 class App extends Component {
   constructor() {
@@ -24,6 +24,15 @@ class App extends Component {
     const index = newIndex;
     this.setState({ activeCity: this.state.cities[index] });
   }
+
+  handleSearchSubmit(place) {
+    console.log(place);
+    const cities = [...this.state.cities];
+    cities.push({ name: place.name });
+    this.setState({
+      cities,
+    })
+  }
   
   render() {
     
@@ -33,9 +42,14 @@ class App extends Component {
       <div className="App">
         <div className="cities-container">
           <h1 className="cities-container__title">Choose a city</h1>
-          <SearchCity />
+          <Autocomplete
+              style={{width: '90%'}}
+              onPlaceSelected={(place) => { this.handleSearchSubmit(place) }}
+              types={['(regions)']}
+          />
           <WeatherCities 
             cities={this.state.cities}
+            componentRestrictions={{country: "us"}}
             chosenCity={ this.setActiveCityIndex } />
         </div>
         <WeatherDisplay city={activeCity.name}/>

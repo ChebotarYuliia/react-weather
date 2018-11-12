@@ -9,8 +9,8 @@ class WeatherDisplay extends Component{
         }
     }
 
-    componentDidMount() {
-        const city = this.props.city;
+    requestData(props = this.props) {
+        const city = props.city;
         const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b1b35bba8b434a28a0be2a3e1071ae5b&&units=metric`;
         console.log(URL)
         fetch(URL)
@@ -20,20 +20,18 @@ class WeatherDisplay extends Component{
         });
     }
 
+    componentDidMount() {
+        this.requestData();
+    }
+
     componentWillReceiveProps(props) {
-        const newCity = props.city;
-        const URL = `http://api.openweathermap.org/data/2.5/weather?q=${newCity}&appid=b1b35bba8b434a28a0be2a3e1071ae5b&&units=metric`;
-        fetch(URL)
-        .then( res => res.json() )
-        .then( json => {
-            this.setState({ weatherData: json });
-        });
+        this.requestData(props);
     }
 
     render() {
 
         const { weatherData } = this.state;
-        if (!weatherData) return <div>Loading</div>
+        if (!weatherData || !weatherData.weather) return <div>Loading</div>
         const weather = weatherData.weather[0];
         const iconUrl = `http://openweathermap.org/img/w/${weather.icon}.png`;
         
