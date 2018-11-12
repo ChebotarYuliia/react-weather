@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import SearchCity from './components/SearchCity'
 import WeatherCities from './components/WeatherCities';
 import WeatherDisplay from './components/WeatherDisplay';
 
@@ -26,12 +27,13 @@ class App extends Component {
   
   render() {
     
-    const { cities, activeCity } = this.state;
+    const { activeCity } = this.state;
 
     return (
       <div className="App">
         <div className="cities-container">
           <h1 className="cities-container__title">Choose a city</h1>
+          <SearchCity />
           <WeatherCities 
             cities={this.state.cities}
             chosenCity={ this.setActiveCityIndex } />
