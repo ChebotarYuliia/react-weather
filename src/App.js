@@ -11,13 +11,11 @@ class App extends Component {
     this.state = {
       cities : [
         { name: "Kharkiv" },
-        { name: "Kiev" },
-        { name: "Odessa" },
-        { name: "Lviv" }
       ],
       activeCity: { name: "Kharkiv" },
     };
     this.setActiveCityIndex = this.setActiveCityIndex.bind(this);
+    this.handleDeleteCity = this.handleDeleteCity.bind(this);
   }
 
   setActiveCityIndex = (newIndex) => {
@@ -32,7 +30,17 @@ class App extends Component {
     this.setState({
       cities,
     })
-  }
+  };
+
+  handleDeleteCity = (city) => {
+    let filteredCities = this.state.cities.filter( function(item) {
+      return ( item.name !== city)
+    });
+    this.setState({
+      cities: filteredCities,
+    })
+  };
+
   
   render() {
     
@@ -43,14 +51,16 @@ class App extends Component {
         <div className="cities-container">
           <h1 className="cities-container__title">Choose a city</h1>
           <Autocomplete
-              style={{width: '90%'}}
+              id="searchInput"
               onPlaceSelected={(place) => { this.handleSearchSubmit(place) }}
               types={['(regions)']}
           />
           <WeatherCities 
             cities={this.state.cities}
             componentRestrictions={{country: "us"}}
-            chosenCity={ this.setActiveCityIndex } />
+            chosenCity={ this.setActiveCityIndex } 
+            delete={this.handleDeleteCity}
+          />
         </div>
         <WeatherDisplay city={activeCity.name}/>
       </div>

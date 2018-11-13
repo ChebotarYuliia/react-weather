@@ -10,16 +10,23 @@ class WeatherCities extends Component{
 
         this.createCitiesArray = this.createCitiesArray.bind(this);
         this.setChosenCityIndex = this.setChosenCityIndex.bind(this);
-    }
+        this.delete = this.delete.bind(this);
+    };
 
     createCitiesArray = (city, index) => {
         return (
-            <button
-                className={ (this.state.activeCityIndex === index) ? 'city-btn active' : 'city-btn' }
-                onClick={ () => this.setChosenCityIndex(index)}
-                key={index}>
-            {city.name}
-          </button>
+           <div className="city-wrp" key={index}>
+                <button
+                        className={ (this.state.activeCityIndex === index) ? 'city-btn active' : 'city-btn' }
+                        onClick={ () => this.setChosenCityIndex(index)}
+                        >
+                    {city.name}
+                </button>
+                <button className="delete-city__btn"
+                        onClick={ () => this.delete(city.name)}>
+                        Delete
+                </button>
+           </div>
         )
       };
 
@@ -29,6 +36,10 @@ class WeatherCities extends Component{
         });
         this.props.chosenCity(index);
       }
+
+      delete = (cityName) => {
+          this.props.delete(cityName)
+    };
 
       render() {
         let citiesArray = this.props.cities.map(this.createCitiesArray);

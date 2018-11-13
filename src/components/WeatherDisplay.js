@@ -11,9 +11,8 @@ class WeatherDisplay extends Component{
 
     requestData(props = this.props) {
         const city = props.city;
-        const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b1b35bba8b434a28a0be2a3e1071ae5b&&units=metric`;
-        console.log(URL)
-        fetch(URL)
+        const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b1b35bba8b434a28a0be2a3e1071ae5b&&units=metric`;
+        fetch(url)
         .then( res => res.json() )
         .then( json => {
             this.setState({ weatherData: json });

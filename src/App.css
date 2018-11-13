@@ -90,3 +90,25 @@
     cursor: pointer;
     border-radius: 5px;
 }
+
+.city-wrp{
+    display: flex;
+    align-items: center;
+}
+
+.delete-city__btn{
+    padding: 5px;
+    color: #000;
+    font-size: 14px;
+    border: 1px solid #232323;
+    margin-left: 5px;
+    background: none;
+    outline: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px
+}
+
+.delete-city__btn:hover{
+    background: #92929221;
+}
